@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import type { Game } from "@/types";
+import GameCard from "@/components/GameCard.vue"
 
 const games = ref<Game[]>([
     {
@@ -25,16 +26,21 @@ const games = ref<Game[]>([
         minBet: 1,
     }
 ])
+
+
+function onToggleFavorite(id: string) {
+    console.log("toggle", id)
+}
 </script>
 
 <template>
-    <div class="p-4">
-        <h1 class="mb-4 text-2xl font-bold">Mini Games Lobby</h1>
+    <div class="flex justify-center border border-gray-800">
+        <div class="p-4">
+            <h1 class="flex justify-center mb-4 text-2xl font-bold">Mini Games Lobby</h1>
 
-        <ul>
-            <li v-for="game in games" :key="game.id">
-                {{ game.title }} ({{ game.category }})
-            </li>
-        </ul>
+            <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                <GameCard v-for="game in games" :key="game.id" :game="game" @toggle-favorite="onToggleFavorite" />
+            </ul>
+        </div>
     </div>
 </template>
